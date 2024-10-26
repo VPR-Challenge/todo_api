@@ -1,7 +1,10 @@
 class SessionsController < ApplicationController
+  skip_before_action :authorize_request, only: [:create]
+
   def create
     user = User.find_by(email: params[:email])
-    if user && user.authenticate(params[:password])
+
+    if user&.authenticate(params[:password])
       token = encode_token({ user_id: user.id })
       render json: { user: user, jwt: token }, status: :ok
     else
@@ -10,11 +13,6 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-  end
-
-  private
-
-  def encode_token(payload)
-    JWT.encode(payload, 'your_secret_key')
+    render json: { message: 'Logged out' }, status: :ok
   end
 end

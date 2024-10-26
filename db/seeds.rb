@@ -1,4 +1,4 @@
-user = User.create!(name: "Test User", email: "test@example.com", password: "password")
+user = User.create!(name: "Test User", email: "joao@example.com", password: "123456")
 
 columns = ['Pendente', 'Fazendo', 'Feito'].map do |title|
   Column.create!(title: title, user: user)
